@@ -1,0 +1,58 @@
+---
+// src/components/astro/Footer.astro
+const YEAR = new Date().getFullYear();
+---
+<footer class="w-full bg-ink text-canvas-soft/80 py-16 border-t border-canvas-soft/10 dark:bg-[#0a0c0a] dark:text-canvas-soft/70 dark:border-canvas-soft/5" aria-labelledby="footer-heading">
+  <h2 id="footer-heading" class="sr-only">Footer</h2>
+  <div class="max-w-5xl mx-auto px-4 md:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      {/* Brand Column */}
+      <div class="md:col-span-2 space-y-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-ink font-bold text-lg select-none">
+            W
+          </div>
+          <span class="font-wise font-black text-xl tracking-tight text-canvas">
+            WorkHours<span class="text-primary font-black">.</span>
+          </span>
+        </div>
+        <p class="text-xs text-canvas-soft/50 leading-relaxed max-w-sm">
+          A production-quality tool for freelancers, payroll departments, and hourly staff. Built for visual simplicity and high-precision calculations.
+        </p>
+      </div>
+
+      {/* Nav Link Columns */}
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-canvas mb-4">Tools</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/#calculator" class="hover:text-primary transition-default">Work Hours Calculator</a></li>
+          <li><a href="/#how-it-works" class="hover:text-primary transition-default">How It Works</a></li>
+          <li><a href="/#faq" class="hover:text-primary transition-default">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-canvas mb-4">Company</h3>
+        <ul class="space-y-2 text-xs">
+          <li><a href="/about" class="hover:text-primary transition-default">About Us</a></li>
+          <li><a href="/contact" class="hover:text-primary transition-default">Contact Us</a></li>
+          <li><a href="/privacy-policy" class="hover:text-primary transition-default">Privacy Policy</a></li>
+          <li><a href="/terms" class="hover:text-primary transition-default">Terms & Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    {/* Bottom row */}
+    <div class="border-t border-canvas-soft/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="text-[11px] text-canvas-soft/40">
+        &copy; {YEAR} WorkHours Calculator. All rights reserved. Locally calculated.
+      </span>
+      <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[11px] text-canvas-soft/40">
+        <a href="/about" class="hover:text-canvas transition-default">About</a>
+        <a href="/contact" class="hover:text-canvas transition-default">Contact</a>
+        <a href="/privacy-policy" class="hover:text-canvas transition-default">Privacy</a>
+        <a href="/terms" class="hover:text-canvas transition-default">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>

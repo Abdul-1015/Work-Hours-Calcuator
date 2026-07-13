@@ -1,11 +1,76 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Hero from '../components/astro/Hero.astro';
+import Calculator from '../components/react/Calculator';
+import HowItWorks from '../components/astro/HowItWorks.astro';
+import Faq from '../components/astro/Faq.astro';
+import Footer from '../components/astro/Footer.astro';
 ---
 
 <Layout>
-	<Welcome />
+  {/* Hero Headline Section */}
+  <Hero />
+
+  {/* Main Calculator React Island */}
+  <section id="calculator" class="w-full bg-canvas-soft pb-16 md:pb-24 scroll-mt-20 dark:bg-[#1a1d1a]">
+    <Calculator client:load />
+  </section>
+
+  {/* SEO Content Section */}
+  <section class="w-full bg-canvas py-16 md:py-24 dark:bg-[#111311]" aria-labelledby="seo-content-title">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 id="seo-content-title" class="text-2xl md:text-3xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
+        The Best Free Work Hours Calculator for Accurate Time Tracking
+      </h2>
+      
+      <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
+        <p>
+          Our <strong class="text-ink dark:text-canvas">work hours calculator</strong> is the most reliable online tool for tracking your daily and weekly work hours. Whether you are an hourly employee, freelancer, or payroll manager, this free work hours calculator provides instant, accurate results without any registration or downloads. Simply enter your start and end times, add any lunch break or rest periods, and get your total work hours calculated automatically in both standard and decimal format.
+        </p>
+
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">Work Hours Calculator with Lunch Break Support</h3>
+        <p>
+          One of the most requested features in any work hours calculator with lunch break is the ability to subtract unpaid break time from your total shift. Our tool makes this effortless. Enter your lunch duration in minutes, and the calculator instantly deducts it from your gross elapsed time. Whether you take a 30-minute lunch or a full hour, the work hours calculator with lunch feature ensures your payroll calculations are always accurate. This is especially useful for employees who need to track net worked time versus gross time on site.
+        </p>
+
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">Weekly Work Hours Calculator for Timesheet Management</h3>
+        <p>
+          Tracking a full work week has never been easier. Our weekly work hours calculator lets you log shifts for Monday through Sunday, automatically calculating daily totals and weekly summaries. Enter start times, end times, and break durations for each day, and the weekly work hours calculator instantly computes your total hours worked, decimal hours, and total minutes for the entire week. This makes it the perfect timesheet calculator for employees who need to submit weekly reports to their employer or payroll department.
+        </p>
+
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">Online Work Hours Calculator with Overnight Shift Detection</h3>
+        <p>
+          Working night shifts? Our online work hours calculator automatically detects overnight shifts. If your end time is earlier than your start time, the calculator assumes a midnight crossover and adds 24 hours to compute the correct duration. This intelligent feature eliminates manual calculations and prevents errors common in overnight shift tracking. The total work hours calculator handles even the most complex scheduling scenarios with ease.
+        </p>
+
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">Daily Work Hours Calculator with Decimal Conversion</h3>
+        <p>
+          Employers and payroll systems require decimal hours for accurate wage calculations. Our daily work hours calculator automatically converts your hours and minutes into decimal format. For example, 8 hours and 30 minutes becomes 8.50 decimal hours, making it simple to multiply by your hourly rate. This work hours calculator app eliminates the common mistakes that occur when manually converting time to payroll-ready numbers.
+        </p>
+
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">Why Choose Our Free Work Hours Calculator?</h3>
+        <p>
+          Our free work hours calculator stands out from other time tracking tools for several reasons. First, it works entirely in your browser with no data sent to any server, ensuring complete privacy for your timesheet information. Second, it supports both 12-hour AM/PM and 24-hour military time formats, giving you flexibility in how you enter your shifts. Third, the calculator provides instant copy-to-clipboard functionality, allowing you to quickly paste your work hours summary into emails, spreadsheets, or payroll software. Whether you need a simple work hours calculator app for personal use or a comprehensive tool for your team, our calculator delivers accurate results every time.
+        </p>
+
+        <p>
+          Start using the most trusted online work hours calculator today. Calculate your shifts, track your weekly hours, and generate payroll-ready decimal values all in one place. No sign-up required, completely free, and designed for accuracy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Informative / Formula Steps Section */}
+  <section id="how-it-works" class="scroll-mt-16">
+    <HowItWorks />
+  </section>
+
+  {/* FAQ Section */}
+  <section id="faq" class="scroll-mt-16">
+    <Faq />
+  </section>
+
+  {/* Footer details */}
+  <Footer />
 </Layout>

@@ -1,0 +1,74 @@
+---
+// src/components/astro/HowItWorks.astro
+import { Clock, Coffee, ShieldAlert, BadgeDollarSign } from 'lucide-react';
+---
+<section class="w-full bg-canvas py-16 md:py-24 border-t border-canvas-soft dark:bg-[#111311] dark:border-canvas-soft/10" aria-labelledby="how-it-works-title">
+  <div class="max-w-5xl mx-auto px-4 md:px-6">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 id="how-it-works-title" class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-4 text-ink dark:text-canvas">
+        How the Calculations Work
+      </h2>
+      <p class="text-body text-base leading-relaxed dark:text-canvas-soft/80">
+        We make calculating shifts straightforward. Here is a breakdown of how the math and automatic features operate behind the scenes.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      {/* Step 1 */}
+      <div class="bg-canvas-soft rounded-xl p-6 md:p-8 flex flex-col justify-between border border-canvas-soft/40 hover:border-ink/10 transition-default dark:bg-[#1a1d1a] dark:border-canvas-soft/10 dark:hover:border-canvas-soft/20">
+        <div>
+          <div class="w-12 h-12 bg-canvas rounded-full flex items-center justify-center mb-6 shadow-xs dark:bg-ink-deep">
+            <Clock className="w-6 h-6 text-ink dark:text-canvas" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight mb-3 text-ink dark:text-canvas">1. Input Shift Times</h3>
+          <p class="text-body text-sm leading-relaxed mb-4 dark:text-canvas-soft/80">
+            Enter your starting and ending hours. The parser accepts standard colons (<span class="font-mono">9:00</span>) or raw digits (<span class="font-mono">1730</span> to mean 17:30). AM/PM values are configured with a single click.
+          </p>
+        </div>
+        <span class="text-xs font-bold text-mute uppercase tracking-wider dark:text-canvas-soft/50">Format Agnostic</span>
+      </div>
+
+      {/* Step 2 */}
+      <div class="bg-canvas-soft rounded-xl p-6 md:p-8 flex flex-col justify-between border border-canvas-soft/40 hover:border-ink/10 transition-default dark:bg-[#1a1d1a] dark:border-canvas-soft/10 dark:hover:border-canvas-soft/20">
+        <div>
+          <div class="w-12 h-12 bg-canvas rounded-full flex items-center justify-center mb-6 shadow-xs dark:bg-ink-deep">
+            <Coffee className="w-6 h-6 text-ink dark:text-canvas" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight mb-3 text-ink dark:text-canvas">2. Subtract Breaks</h3>
+          <p class="text-body text-sm leading-relaxed mb-4 dark:text-canvas-soft/80">
+            Unpaid lunches or break intervals are entered directly in minutes. The calculator converts this duration into hours and deducts it from the gross elapsed time automatically.
+          </p>
+        </div>
+        <span class="text-xs font-bold text-mute uppercase tracking-wider dark:text-canvas-soft/50">Net Duration Math</span>
+      </div>
+
+      {/* Step 3 */}
+      <div class="bg-canvas-soft rounded-xl p-6 md:p-8 flex flex-col justify-between border border-canvas-soft/40 hover:border-ink/10 transition-default dark:bg-[#1a1d1a] dark:border-canvas-soft/10 dark:hover:border-canvas-soft/20">
+        <div>
+          <div class="w-12 h-12 bg-canvas rounded-full flex items-center justify-center mb-6 shadow-xs dark:bg-ink-deep">
+            <ShieldAlert className="w-6 h-6 text-ink dark:text-canvas" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight mb-3 text-ink dark:text-canvas">3. Overnight Shift Auto-Detection</h3>
+          <p class="text-body text-sm leading-relaxed mb-4 dark:text-canvas-soft/80">
+            If the end time is chronologically earlier than the start time (e.g., <span class="font-mono">10:00 PM</span> to <span class="font-mono">6:00 AM</span>), our logic automatically detects a midnight crossover and adjusts the calculation without requiring user intervention.
+          </p>
+        </div>
+        <span class="text-xs font-bold text-mute uppercase tracking-wider dark:text-canvas-soft/50">Overnight Support</span>
+      </div>
+
+      {/* Step 4 */}
+      <div class="bg-canvas-soft rounded-xl p-6 md:p-8 flex flex-col justify-between border border-canvas-soft/40 hover:border-ink/10 transition-default dark:bg-[#1a1d1a] dark:border-canvas-soft/10 dark:hover:border-canvas-soft/20">
+        <div>
+          <div class="w-12 h-12 bg-canvas rounded-full flex items-center justify-center mb-6 shadow-xs dark:bg-ink-deep">
+            <BadgeDollarSign className="w-6 h-6 text-ink dark:text-canvas" />
+          </div>
+          <h3 class="text-xl font-bold tracking-tight mb-3 text-ink dark:text-canvas">4. Calculate Payroll Decimals</h3>
+          <p class="text-body text-sm leading-relaxed mb-4 dark:text-canvas-soft/80">
+            Payroll systems rely on decimal hours. We divide total minutes by <span class="font-mono">60</span> and round to two decimal places. For example, a shift of <span class="font-bold">8h 15m</span> translates to <span class="font-bold font-mono text-ink dark:text-canvas">8.25 hours</span>.
+          </p>
+        </div>
+        <span class="text-xs font-bold text-mute uppercase tracking-wider dark:text-canvas-soft/50">Payroll Compatible</span>
+      </div>
+    </div>
+  </div>
+</section>

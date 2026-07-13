@@ -1,23 +1,207 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+// src/layouts/Layout.astro
+import '../styles/global.css';
+import ThemeToggle from '../components/react/ThemeToggle';
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  keywords?: string;
+}
+
+const {
+  title = "Work Hours Calculator — Free Online Time & Payroll Tool",
+  description = "Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly. Auto-detects overnight shifts.",
+  canonicalUrl = Astro.url.href,
+  keywords = "work hours calculator, work hours calculator with lunch, weekly work hours calculator, online work hours calculator, free work hours calculator, total work hours calculator, work hours calculator with lunch break, work hours calculator with breaks, daily work hours calculator, work hours calculator app"
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.copy.svg" />
+    <link rel="shortcut icon" href="/favicon.copy.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="WorkHrs" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <script is:inline>
+      (function() {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" href="/sitemap.xml" />
+    
+    {/* SEO Meta Tags */}
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="WorkHours" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    {/* Open Graph / Facebook */}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content="Work Hours Calculator — Free Online Time & Payroll Tool" />
+    <meta property="og:description" content="Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly. Auto-detects overnight shifts." />
+    <meta property="og:image" content={`${Astro.url.origin}/og-image.png`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Work Hours Calculator - Free Online Time Tracking Tool" />
+    <meta property="og:site_name" content="WorkHours Calculator" />
+    <meta property="og:locale" content="en_US" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content="Work Hours Calculator — Free Online Time & Payroll Tool" />
+    <meta name="twitter:description" content="Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly." />
+    <meta name="twitter:image" content={`${Astro.url.origin}/og-image.png`} />
+    <meta name="twitter:image:alt" content="Work Hours Calculator - Free Online Time Tracking Tool" />
+
+    {/* Preconnect & Google Fonts */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Manrope:wght@800;900&display=swap" rel="stylesheet" />
+
+    {/* JSON-LD Structured Data for WebApplication Schema */}
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Work Hours Calculator",
+        "url": "https://calcworkhours.com",
+        "description": "Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Single shift time calculation",
+          "Weekly timesheet calculator",
+          "Work hours calculator with lunch break",
+          "Automatic overnight shift detection",
+          "Decimal hours conversion",
+          "Copy results to clipboard",
+          "CSV export for weekly timesheets"
+        ]
+      }
+    </script>
+
+    {/* JSON-LD Structured Data for FAQ Schema */}
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I convert hours and minutes to decimal hours?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "To convert minutes to decimal hours, divide the minutes by 60. For example, 15 minutes is 15/60 = 0.25 hours, 30 minutes is 30/60 = 0.50 hours, and 45 minutes is 45/60 = 0.75 hours. Add this back to the total hours to get decimal hours (e.g. 8 hours and 15 minutes is 8.25 decimal hours)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does automatic overnight shift detection work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "If the end time entered is chronologically before the start time (e.g., start 10:00 PM and end 6:00 AM), the calculator automatically assumes an overnight shift and adds 24 hours to the end time. This prevents negative totals and calculates the elapsed duration correctly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do employers require decimal hours for payroll?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Decimal hours simplify payroll arithmetic. Multiplying an hourly wage by hours and minutes (like 7 hours and 45 minutes) yields an incorrect total. Converting 45 minutes to 0.75 decimal hours yields 7.75 hours, which can be directly multiplied by the pay rate (e.g., $20.00/hour * 7.75 = $155.00)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is this work hours calculator free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, our work hours calculator is completely free to use. There are no hidden fees, no registration required, and all calculations are performed locally in your browser for complete privacy."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use this as a weekly work hours calculator?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolutely. Our weekly work hours calculator allows you to log shifts for Monday through Sunday, automatically calculating daily totals and weekly summaries including total hours worked, decimal hours, and total minutes."
+            }
+          }
+        ]
+      }
+    </script>
+
+    {/* Google Analytics */}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-26HWW430MK" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-26HWW430MK');
+    </script>
+  </head>
+  <body>
+    {/* Accessibility Skip Link */}
+    <a 
+      href="#main-content" 
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:bg-primary focus:text-ink focus:px-4 focus:py-2 focus:rounded-md focus:font-bold focus:shadow-md"
+    >
+      Skip to main content
+    </a>
+    
+    <div class="min-h-screen flex flex-col justify-between">
+      {/* Header / Nav Area (Wise-inspired, sticky on page) */}
+      <header class="w-full bg-canvas border-b border-canvas-soft sticky top-0 z-40 dark:bg-[#111311] dark:border-canvas-soft/10" role="banner">
+        <div class="max-w-5xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+          <a href="/" class="flex items-center gap-2 focus-visible:outline-hidden" aria-label="WorkHours Homepage">
+            <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-ink font-bold text-lg select-none" aria-hidden="true">
+              W
+            </div>
+            <span class="font-wise font-black text-xl tracking-tight text-ink dark:text-canvas">
+              WorkHours<span class="text-primary font-black">.</span>
+            </span>
+          </a>
+
+          <nav class="flex items-center space-x-4 md:space-x-6" role="navigation" aria-label="Main Navigation">
+            <a href="/#how-it-works" class="text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">How it works</a>
+            <a href="/#faq" class="text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">FAQ</a>
+            <a href="/about" class="hidden md:inline-flex text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">About</a>
+            <a href="/contact" class="hidden md:inline-flex text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">Contact</a>
+            <ThemeToggle client:load />
+            <a 
+              href="/#calculator" 
+              class="hidden sm:inline-flex px-4 py-2 text-xs font-bold bg-primary text-ink hover:bg-primary-hover active:bg-primary-neutral rounded-xl transition-default"
+            >
+              Use Calculator
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Page Slot */}
+      <main id="main-content" class="flex-1" role="main">
+        <slot />
+      </main>
+
+    </div>
+  </body>
+</html>
