@@ -58,7 +58,20 @@
     "exportCSV": "Экспорт отчёта в CSV",
     "exportedCSV": "CSV экспортирован!",
     "resetAllEntries": "Сбросить все записи",
-    "noBreakLabel": "Без перерыва"
+    "noBreakLabel": "Без перерыва",
+    "earnings": "Доход",
+    "days": ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
+    "csvHeaders": {
+      "day": "День",
+      "startTime": "Время начала",
+      "endTime": "Время окончания",
+      "breakMins": "Перерыв (мин)",
+      "workedHours": "Рабочие часы",
+      "decimalHours": "Десятичные часы",
+      "overnight": "Ночная",
+      "earnings": "Доход",
+      "totals": "ИТОГО"
+    }
   },
   "howItWorks": {
     "title": "Как работает расчёт",

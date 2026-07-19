@@ -59,7 +59,19 @@
     "exportedCSV": "Exported CSV!",
     "resetAllEntries": "Reset all entries",
     "noBreakLabel": "No Break",
-    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    "earnings": "Earnings",
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "csvHeaders": {
+      "day": "Day",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "breakMins": "Break (mins)",
+      "workedHours": "Worked Hours",
+      "decimalHours": "Decimal Hours",
+      "overnight": "Overnight",
+      "earnings": "Earnings",
+      "totals": "TOTALS"
+    }
   },
   "howItWorks": {
     "title": "How the Calculations Work",

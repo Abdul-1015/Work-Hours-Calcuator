@@ -58,7 +58,20 @@
     "exportCSV": "CSVレポートをエクスポート",
     "exportedCSV": "CSVエクスポート済み！",
     "resetAllEntries": "すべての入力をリセット",
-    "noBreakLabel": "休憩なし"
+    "noBreakLabel": "休憩なし",
+    "earnings": "収入",
+    "days": ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"],
+    "csvHeaders": {
+      "day": "日",
+      "startTime": "開始時間",
+      "endTime": "終了時間",
+      "breakMins": "休憩（分）",
+      "workedHours": "勤務時間",
+      "decimalHours": "10進数時間",
+      "overnight": "夜勤",
+      "earnings": "収入",
+      "totals": "合計"
+    }
   },
   "howItWorks": {
     "title": "計算の仕組み",

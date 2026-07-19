@@ -58,7 +58,20 @@
     "exportCSV": "CSV-Bericht exportieren",
     "exportedCSV": "CSV exportiert!",
     "resetAllEntries": "Alle Einträge zurücksetzen",
-    "noBreakLabel": "Keine Pause"
+    "noBreakLabel": "Keine Pause",
+    "earnings": "Verdienst",
+    "days": ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
+    "csvHeaders": {
+      "day": "Tag",
+      "startTime": "Startzeit",
+      "endTime": "Endzeit",
+      "breakMins": "Pause (Min)",
+      "workedHours": "Arbeitsstunden",
+      "decimalHours": "Dezimalstunden",
+      "overnight": "Nachtschicht",
+      "earnings": "Verdienst",
+      "totals": "GESAMT"
+    }
   },
   "howItWorks": {
     "title": "So funktionieren die Berechnungen",

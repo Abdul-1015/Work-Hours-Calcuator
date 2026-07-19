@@ -58,7 +58,20 @@
     "exportCSV": "导出CSV报告",
     "exportedCSV": "CSV已导出！",
     "resetAllEntries": "重置所有条目",
-    "noBreakLabel": "无休息"
+    "noBreakLabel": "无休息",
+    "earnings": "收入",
+    "days": ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"],
+    "csvHeaders": {
+      "day": "日期",
+      "startTime": "开始时间",
+      "endTime": "结束时间",
+      "breakMins": "休息（分钟）",
+      "workedHours": "工作时间",
+      "decimalHours": "十进制工时",
+      "overnight": "夜班",
+      "earnings": "收入",
+      "totals": "合计"
+    }
   },
   "howItWorks": {
     "title": "计算原理",

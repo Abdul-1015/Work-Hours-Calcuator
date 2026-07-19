@@ -58,7 +58,20 @@
     "exportCSV": "Exportar Reporte CSV",
     "exportedCSV": "¡CSV Exportado!",
     "resetAllEntries": "Restablecer todas las entradas",
-    "noBreakLabel": "Sin Descanso"
+    "noBreakLabel": "Sin Descanso",
+    "earnings": "Ganancias",
+    "days": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+    "csvHeaders": {
+      "day": "Día",
+      "startTime": "Hora de Inicio",
+      "endTime": "Hora de Fin",
+      "breakMins": "Descanso (min)",
+      "workedHours": "Horas Trabajadas",
+      "decimalHours": "Horas Decimales",
+      "overnight": "Nocturno",
+      "earnings": "Ganancias",
+      "totals": "TOTALES"
+    }
   },
   "howItWorks": {
     "title": "Cómo Funcionan los Cálculos",

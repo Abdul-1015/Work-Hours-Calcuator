@@ -58,7 +58,20 @@
     "exportCSV": "CSV रिपोर्ट निर्यात करें",
     "exportedCSV": "CSV निर्यात हो गया!",
     "resetAllEntries": "सभी प्रविष्टियां रीसेट करें",
-    "noBreakLabel": "कोई ब्रेक नहीं"
+    "noBreakLabel": "कोई ब्रेक नहीं",
+    "earnings": "कमाई",
+    "days": ["सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार", "रविवार"],
+    "csvHeaders": {
+      "day": "दिन",
+      "startTime": "शुरुआत का समय",
+      "endTime": "समाप्ति का समय",
+      "breakMins": "ब्रेक (मि.)",
+      "workedHours": "कार्य घंटे",
+      "decimalHours": "दशमलव घंटे",
+      "overnight": "रात्रि",
+      "earnings": "कमाई",
+      "totals": "कुल"
+    }
   },
   "howItWorks": {
     "title": "गणना कैसे काम करती है",

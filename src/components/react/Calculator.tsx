@@ -65,7 +65,19 @@ interface CalculatorTranslations {
   exportedCSV: string;
   resetAllEntries: string;
   noBreakLabel: string;
+  earnings: string;
   days: string[];
+  csvHeaders: {
+    day: string;
+    startTime: string;
+    endTime: string;
+    breakMins: string;
+    workedHours: string;
+    decimalHours: string;
+    overnight: string;
+    earnings: string;
+    totals: string;
+  };
 }
 
 interface CalculatorProps {
@@ -200,6 +212,12 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
   const weeklyWage = parseFloat(weeklyHourlyWage) || 0;
   const weeklyTotalPay = totalWeeklyHoursDecimal * weeklyWage;
 
+  // Add daily pay to each row
+  const weeklyRowsWithEarnings = calculatedWeeklyRows.map(row => ({
+    ...row,
+    dailyPay: row.workedHours * weeklyWage
+  }));
+
   // Update a specific field in the weekly rows
   const handleWeeklyRowChange = (index: number, field: keyof TimesheetRow, value: string) => {
     const updated = [...weeklyRows];
@@ -230,9 +248,9 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
     if (totalWeeklyMinutes === 0) return;
     
     let summaryText = `Weekly Timesheet Summary:\n`;
-    calculatedWeeklyRows.forEach(row => {
+    weeklyRowsWithEarnings.forEach(row => {
       if (row.workedMinutes > 0) {
-        summaryText += `- ${row.day}: ${row.start}${!is24h ? ' ' + row.startAmPm.toUpperCase() : ''} - ${row.end}${!is24h ? ' ' + row.endAmPm.toUpperCase() : ''} (${row.breakMins}m break) -> ${row.display} (${row.workedHours.toFixed(2)} hrs)${row.overnight ? ' [Overnight]' : ''}\n`;
+        summaryText += `- ${row.day}: ${row.start}${!is24h ? ' ' + row.startAmPm.toUpperCase() : ''} - ${row.end}${!is24h ? ' ' + row.endAmPm.toUpperCase() : ''} (${row.breakMins}m break) -> ${row.display} (${row.workedHours.toFixed(2)} hrs)${row.overnight ? ' [Overnight]' : ''}${weeklyWage > 0 ? ` | ${weeklyCurrencySymbol}${row.dailyPay.toFixed(2)}` : ''}\n`;
       } else {
         summaryText += `- ${row.day}: Off\n`;
       }
@@ -260,16 +278,27 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
   const handleExportCSV = () => {
     if (totalWeeklyMinutes === 0) return;
     
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Day,Start Time,End Time,Break (mins),Worked Hours,Decimal Hours,Overnight\n";
+    const h = t.csvHeaders || {
+      day: 'Day', startTime: 'Start Time', endTime: 'End Time',
+      breakMins: 'Break (mins)', workedHours: 'Worked Hours',
+      decimalHours: 'Decimal Hours', overnight: 'Overnight', earnings: 'Earnings', totals: 'TOTALS'
+    };
+    let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+    csvContent += `"${h.day}","${h.startTime}","${h.endTime}","${h.breakMins}","${h.workedHours}","${h.decimalHours}","${h.overnight}"`;
+    if (weeklyWage > 0) csvContent += `,"${h.earnings}"`;
+    csvContent += `\n`;
     
-    calculatedWeeklyRows.forEach(row => {
+    weeklyRowsWithEarnings.forEach(row => {
       const formattedStart = row.start ? `${row.start}${!is24h ? ' ' + row.startAmPm.toUpperCase() : ''}` : '-';
       const formattedEnd = row.end ? `${row.end}${!is24h ? ' ' + row.endAmPm.toUpperCase() : ''}` : '-';
-      csvContent += `"${row.day}","${formattedStart}","${formattedEnd}",${row.breakMins},"${row.display}",${row.workedHours},${row.overnight ? "Yes" : "No"}\n`;
+      csvContent += `"${row.day}","${formattedStart}","${formattedEnd}",${row.breakMins},"${row.display}",${row.workedHours},${row.overnight ? "Yes" : "No"}`;
+      if (weeklyWage > 0) csvContent += `,${weeklyCurrencySymbol}${row.dailyPay.toFixed(2)}`;
+      csvContent += `\n`;
     });
     
-    csvContent += `\n"TOTALS",,,,"${totalWeeklyDisplay}",${totalWeeklyHoursDecimal},\n`;
+    csvContent += `\n"${h.totals}",,,,"${totalWeeklyDisplay}",${totalWeeklyHoursDecimal},`;
+    if (weeklyWage > 0) csvContent += `,${weeklyCurrencySymbol}${weeklyTotalPay.toFixed(2)}`;
+    csvContent += `\n`;
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -696,7 +725,7 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
                 {/* Table Form for Mobile-First */}
                 <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
                   {weeklyRows.map((row, idx) => {
-                    const parsedRow = calculatedWeeklyRows[idx];
+                    const parsedRow = weeklyRowsWithEarnings[idx];
                     
                     return (
                       <div 
@@ -827,6 +856,11 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
                             {parsedRow.workedMinutes > 0 && (
                               <span className="text-[11px] text-mute block tabular-nums dark:text-canvas-soft/50">
                                 {parsedRow.workedHours.toFixed(2)}h
+                              </span>
+                            )}
+                            {parsedRow.workedMinutes > 0 && weeklyWage > 0 && (
+                              <span className="text-[11px] text-primary font-semibold block tabular-nums">
+                                {weeklyCurrencySymbol}{parsedRow.dailyPay.toFixed(2)}
                               </span>
                             )}
                           </div>

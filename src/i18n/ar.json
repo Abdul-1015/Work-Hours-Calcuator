@@ -58,7 +58,20 @@
     "exportCSV": "تصدير تقرير CSV",
     "exportedCSV": "تم التصدير!",
     "resetAllEntries": "إعادة تعيين جميع الإدخالات",
-    "noBreakLabel": "بدون استراحة"
+    "noBreakLabel": "بدون استراحة",
+    "earnings": "الأرباح",
+    "days": ["الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"],
+    "csvHeaders": {
+      "day": "اليوم",
+      "startTime": "وقت البداية",
+      "endTime": "وقت النهاية",
+      "breakMins": "الاستراحة (د)",
+      "workedHours": "ساعات العمل",
+      "decimalHours": "الساعات العشرية",
+      "overnight": "ليلي",
+      "earnings": "الأرباح",
+      "totals": "المجموع"
+    }
   },
   "howItWorks": {
     "title": "كيف تعمل الحسابات",
