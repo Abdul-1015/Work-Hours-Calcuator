@@ -1,10 +1,7 @@
-# robots.txt for Work Hours Calculator
 User-agent: *
 Allow: /
 
-# Sitemap
 Sitemap: https://calcworkhours.com/sitemap.xml
 
-# Disallow error pages
 Disallow: /404.html
 Disallow: /500.html

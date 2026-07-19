@@ -8,7 +8,6 @@ interface Props {
   title?: string;
   description?: string;
   canonicalUrl?: string;
-  keywords?: string;
   locale?: Locale;
 }
 
@@ -19,11 +18,95 @@ const {
   title = t.site.title,
   description = t.site.description,
   canonicalUrl = Astro.url.href,
-  keywords = t.site.keywords,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 const basePath = locale === 'en' ? currentPath : currentPath.replace(`/${locale}`, '') || '/';
+
+const webAppSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculate Work Hours",
+  "url": "https://calcworkhours.com",
+  "description": description,
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "All",
+  "inLanguage": locale,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Single shift time calculation",
+    "Weekly timesheet calculator",
+    "Work hours calculator with lunch break",
+    "Automatic overnight shift detection",
+    "Decimal hours conversion",
+    "Copy results to clipboard",
+    "CSV export for weekly timesheets"
+  ]
+});
+
+const faqSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": t.faq.q1.replace(/<[^>]*>/g, ''),
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": t.faq.a1.replace(/<[^>]*>/g, '')
+      }
+    },
+    {
+      "@type": "Question",
+      "name": t.faq.q2.replace(/<[^>]*>/g, ''),
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": t.faq.a2.replace(/<[^>]*>/g, '')
+      }
+    },
+    {
+      "@type": "Question",
+      "name": t.faq.q3.replace(/<[^>]*>/g, ''),
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": t.faq.a3.replace(/<[^>]*>/g, '')
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this work hours calculator free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, our work hours calculator is completely free to use. There are no hidden fees, no registration required, and all calculations are performed locally in your browser for complete privacy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this as a weekly work hours calculator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Our weekly work hours calculator allows you to log shifts for Monday through Sunday, automatically calculating daily totals and weekly summaries including total hours worked, decimal hours, and total minutes."
+      }
+    }
+  ]
+});
+
+const breadcrumbSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://calcworkhours.com"
+    }
+  ]
+});
 ---
 <!doctype html>
 <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} class="scroll-smooth">
@@ -51,9 +134,9 @@ const basePath = locale === 'en' ? currentPath : currentPath.replace(`/${locale}
     {/* SEO Meta Tags */}
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content={keywords} />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="WorkHours" />
+    <meta name="author" content="WorkHours Calculator" />
+    <meta name="theme-color" content="#22c55e" />
     <link rel="canonical" href={canonicalUrl} />
 
     {/* Alternate Language Links for SEO */}
@@ -75,8 +158,11 @@ const basePath = locale === 'en' ? currentPath : currentPath.replace(`/${locale}
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={t.hero.title1} />
-    <meta property="og:site_name" content="WorkHours Calculator" />
+    <meta property="og:site_name" content="WorkHours" />
     <meta property="og:locale" content={locale === 'en' ? 'en_US' : locale} />
+    {locales.filter(loc => loc !== locale).map((loc) => (
+      <meta property="og:locale:alternate" content={loc === 'en' ? 'en_US' : loc} />
+    ))}
 
     {/* Twitter */}
     <meta name="twitter:card" content="summary_large_image" />
@@ -92,82 +178,13 @@ const basePath = locale === 'en' ? currentPath : currentPath.replace(`/${locale}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Manrope:wght@800;900&display=swap" rel="stylesheet" />
 
     {/* JSON-LD Structured Data for WebApplication Schema */}
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Work Hours Calculator",
-        "url": "https://calcworkhours.com",
-        "description": {JSON.stringify(description)},
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "All",
-        "inLanguage": "{locale}",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "featureList": [
-          "Single shift time calculation",
-          "Weekly timesheet calculator",
-          "Work hours calculator with lunch break",
-          "Automatic overnight shift detection",
-          "Decimal hours conversion",
-          "Copy results to clipboard",
-          "CSV export for weekly timesheets"
-        ]
-      }
-    </script>
+    <script type="application/ld+json" set:html={webAppSchema} />
 
     {/* JSON-LD Structured Data for FAQ Schema */}
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": {JSON.stringify(t.faq.q1.replace(/<[^>]*>/g, ''))},
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": {JSON.stringify(t.faq.a1.replace(/<[^>]*>/g, ''))}
-            }
-          },
-          {
-            "@type": "Question",
-            "name": {JSON.stringify(t.faq.q2.replace(/<[^>]*>/g, ''))},
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": {JSON.stringify(t.faq.a2.replace(/<[^>]*>/g, ''))}
-            }
-          },
-          {
-            "@type": "Question",
-            "name": {JSON.stringify(t.faq.q3.replace(/<[^>]*>/g, ''))},
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": {JSON.stringify(t.faq.a3.replace(/<[^>]*>/g, ''))}
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is this work hours calculator free to use?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, our work hours calculator is completely free to use. There are no hidden fees, no registration required, and all calculations are performed locally in your browser for complete privacy."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use this as a weekly work hours calculator?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Absolutely. Our weekly work hours calculator allows you to log shifts for Monday through Sunday, automatically calculating daily totals and weekly summaries including total hours worked, decimal hours, and total minutes."
-            }
-          }
-        ]
-      }
-    </script>
+    <script type="application/ld+json" set:html={faqSchema} />
+
+    {/* JSON-LD Structured Data for BreadcrumbList Schema */}
+    <script type="application/ld+json" set:html={breadcrumbSchema} />
 
     {/* Google Analytics */}
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-26HWW430MK" is:inline></script>
