@@ -1,6 +1,6 @@
 {
   "name": "work-hours-calculator",
-  "pages_build_output_dir": "./dist/client",
+  "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-04-15",
   "compatibility_flags": []
 }
