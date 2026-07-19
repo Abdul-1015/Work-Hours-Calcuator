@@ -1,19 +1,32 @@
 ---
 // src/components/astro/Hero.astro
+import type { Locale } from '../../i18n/utils';
+
+interface Props {
+  t: {
+    badge: string;
+    title1: string;
+    title2: string;
+    titleHighlight: string;
+    description: string;
+  };
+}
+
+const { t } = Astro.props;
 ---
 <section class="w-full bg-canvas-soft text-ink pt-16 pb-10 md:pt-24 md:pb-14 dark:bg-[#1a1d1a] dark:text-canvas" aria-labelledby="hero-title">
   <div class="max-w-5xl mx-auto px-4 md:px-6">
     <div class="max-w-3xl">
       <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-pale text-ink-deep text-xs font-extrabold uppercase tracking-widest mb-6 dark:bg-primary/15 dark:text-primary">
         <span class="w-2 h-2 bg-positive rounded-full animate-pulse" aria-hidden="true"></span>
-        Zero Configuration Calculator
+        {t.badge}
       </span>
       <h1 id="hero-title" class="font-wise font-black text-4xl md:text-6xl tracking-tight leading-[1.05] mb-6 text-ink text-pretty dark:text-canvas">
-        Track your work hours.<br />
-        No clutter. <span class="bg-primary/45 px-2 rounded-sm select-none">Just numbers.</span>
+        {t.title1}<br />
+        {t.title2} <span class="bg-primary/45 px-2 rounded-sm select-none">{t.titleHighlight}</span>
       </h1>
       <p class="text-body text-base md:text-lg max-w-2xl leading-relaxed text-pretty dark:text-canvas-soft/80">
-        Input your shift times to instantly calculate total hours, decimal hours, and total minutes. Perfect for freelancers, hourly employees, and payroll calculations.
+        {t.description}
       </p>
     </div>
   </div>

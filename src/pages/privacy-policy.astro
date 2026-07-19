@@ -1,95 +1,76 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/astro/Footer.astro';
+import { getTranslations } from '../i18n/utils';
+
+const t = getTranslations('en');
 ---
 
 <Layout 
-  title="Privacy Policy — Work Hours Calculator"
-  description="Privacy policy for Work Hours Calculator. Learn how we handle your data and protect your privacy."
+  title={t.privacy.title}
+  description={t.site.description}
   keywords="privacy policy, work hours calculator privacy, data protection"
+  locale="en"
 >
   <main class="w-full bg-canvas min-h-screen dark:bg-[#111311]">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
       <h1 class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
-        Privacy Policy
+        {t.privacy.title}
       </h1>
-      <p class="text-sm text-mute mb-8 dark:text-canvas-soft/60">Last updated: January 2025</p>
+      <p class="text-sm text-mute mb-8 dark:text-canvas-soft/60">{t.privacy.lastUpdated}</p>
       
       <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">1. Introduction</h2>
-        <p>
-          Welcome to Work Hours Calculator ("we," "our," or "us"). We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and work hours calculator tool.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.introTitle}</h2>
+        <p set:html={t.privacy.intro}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">2. Information We Collect</h2>
-        <p>
-          <strong class="text-ink dark:text-canvas">No Personal Data Collection:</strong> Our work hours calculator operates entirely within your web browser. We do not collect, store, transmit, or have access to any data you enter into the calculator, including:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.collectTitle}</h2>
+        <p><strong class="text-ink dark:text-canvas">{t.privacy.collectBold}</strong> {t.privacy.collect}</p>
         <ul class="list-disc pl-6 space-y-2">
-          <li>Shift start and end times</li>
-          <li>Break durations</li>
-          <li>Hourly wage information</li>
-          <li>Weekly timesheet data</li>
-          <li>Any calculated results</li>
+          {t.privacy.collectList.map((item: string) => (
+            <li>{item}</li>
+          ))}
         </ul>
-        <p>
-          All calculations are performed locally on your device using JavaScript. No timesheet information is ever sent to our servers or any third-party service.
-        </p>
+        <p set:html={t.privacy.collectNote}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">3. How We Use Information</h2>
-        <p>
-          Since we do not collect any personal data from the calculator tool, there is no personal information to use, share, or sell. The only data that may be automatically collected includes:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.useTitle}</h2>
+        <p set:html={t.privacy.use}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li><strong class="text-ink dark:text-canvas">Analytics Data:</strong> Anonymous usage statistics (page views, session duration) to help us improve the tool</li>
-          <li><strong class="text-ink dark:text-canvas">Technical Data:</strong> Browser type, device information, and IP address for security and performance monitoring</li>
+          {t.privacy.useList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
         </ul>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">4. Local Storage</h2>
-        <p>
-          We use browser local storage to save your preferences, such as:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.storageTitle}</h2>
+        <p set:html={t.privacy.storage}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li>Dark mode / light mode preference</li>
-          <li>Your most recent calculator inputs (for convenience)</li>
+          {t.privacy.storageList.map((item: string) => (
+            <li>{item}</li>
+          ))}
         </ul>
-        <p>
-          This data is stored only on your device and can be cleared at any time through your browser settings. We have no access to this local storage data.
-        </p>
+        <p set:html={t.privacy.storageNote}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">5. Third-Party Services</h2>
-        <p>
-          Our website may use the following third-party services:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.thirdPartyTitle}</h2>
+        <p set:html={t.privacy.thirdParty}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li><strong class="text-ink dark:text-canvas">Google Fonts:</strong> For web font delivery (subject to Google's Privacy Policy)</li>
-          <li><strong class="text-ink dark:text-canvas">Google Analytics:</strong> For anonymous usage analytics (if enabled)</li>
+          {t.privacy.thirdPartyList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
         </ul>
-        <p>
-          These services have their own privacy policies, and we encourage you to review them.
-        </p>
+        <p set:html={t.privacy.thirdPartyNote}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">6. Data Security</h2>
-        <p>
-          We implement appropriate security measures to protect the limited data we may collect. However, please note that no method of electronic transmission or storage is 100% secure, and we cannot guarantee absolute security.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.securityTitle}</h2>
+        <p set:html={t.privacy.security}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">7. Children's Privacy</h2>
-        <p>
-          Our service is not directed to individuals under the age of 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.childrenTitle}</h2>
+        <p set:html={t.privacy.children}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">8. Changes to This Policy</h2>
-        <p>
-          We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.changesTitle}</h2>
+        <p set:html={t.privacy.changes}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">9. Contact Us</h2>
-        <p>
-          If you have any questions about this Privacy Policy, please visit our <a href="/contact" class="text-primary hover:underline">Contact Us</a> page.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.privacy.contactTitle}</h2>
+        <p set:html={t.privacy.contact}></p>
       </div>
     </div>
   </main>
-  <Footer />
+  <Footer t={t.footer} locale="en" />
 </Layout>

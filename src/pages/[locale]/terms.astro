@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/astro/Footer.astro';
+import { getTranslations, type Locale, locales } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales.filter(l => l !== 'en').map(locale => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getTranslations(locale as Locale);
+---
+
+<Layout 
+  title={t.terms.title}
+  description={t.site.description}
+  keywords="terms and conditions, terms of service, work hours calculator terms"
+  locale={locale as Locale}
+>
+  <main class="w-full bg-canvas min-h-screen dark:bg-[#111311]">
+    <div class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
+      <h1 class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
+        {t.terms.title}
+      </h1>
+      <p class="text-sm text-mute mb-8 dark:text-canvas-soft/60">{t.terms.lastUpdated}</p>
+      
+      <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.acceptTitle}</h2>
+        <p set:html={t.terms.accept}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.descTitle}</h2>
+        <p set:html={t.terms.desc}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.useTitle}</h2>
+        <p set:html={t.terms.use}></p>
+        <ul class="list-disc pl-6 space-y-2">
+          {t.terms.useList.map((item: string) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.accuracyTitle}</h2>
+        <p set:html={t.terms.accuracy}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.adviceTitle}</h2>
+        <p set:html={t.terms.advice}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.ipTitle}</h2>
+        <p set:html={t.terms.ip}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.liabilityTitle}</h2>
+        <p set:html={t.terms.liability}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.warrantyTitle}</h2>
+        <p set:html={t.terms.warranty}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.changesTitle}</h2>
+        <p set:html={t.terms.changes}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.governingTitle}</h2>
+        <p set:html={t.terms.governing}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.contactTitle}</h2>
+        <p set:html={t.terms.contact}></p>
+      </div>
+    </div>
+  </main>
+  <Footer t={t.footer} locale={locale as Locale} />
+</Layout>

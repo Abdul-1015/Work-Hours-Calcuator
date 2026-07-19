@@ -1,0 +1,69 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations, type Locale, locales } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales.filter(l => l !== 'en').map(locale => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getTranslations(locale as Locale);
+---
+
+<Layout 
+  title="404 — Page Not Found"
+  description="The page you are looking for does not exist."
+  locale={locale as Locale}
+>
+  <main class="w-full bg-canvas min-h-screen flex items-center justify-center dark:bg-[#111311]">
+    <div class="max-w-lg mx-auto px-4 md:px-6 text-center py-16">
+      <div class="mb-8">
+        <span class="text-8xl md:text-9xl font-wise font-black text-primary/20 dark:text-primary/10 select-none">404</span>
+      </div>
+
+      <div class="w-20 h-20 mx-auto mb-8 bg-canvas-soft rounded-2xl flex items-center justify-center dark:bg-[#1a1d1a]">
+        <svg class="w-10 h-10 text-mute dark:text-canvas-soft/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+        </svg>
+      </div>
+
+      <h1 class="text-2xl md:text-3xl font-wise font-black tracking-tight mb-4 text-ink dark:text-canvas">
+        {t.errors.notFoundTitle}
+      </h1>
+      <p class="text-body mb-8 dark:text-canvas-soft/70">
+        {t.errors.notFoundMessage}
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a 
+          href={`/${locale}`}
+          class="inline-flex items-center justify-center px-6 py-3 text-sm font-bold bg-primary text-ink hover:bg-primary-hover active:bg-primary-neutral rounded-xl transition-default"
+        >
+          <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          {t.errors.goHome}
+        </a>
+        <a 
+          href={`/${locale}/#calculator`}
+          class="inline-flex items-center justify-center px-6 py-3 text-sm font-bold border border-ink/20 text-ink hover:bg-canvas-soft rounded-xl transition-default dark:border-canvas-soft/20 dark:text-canvas dark:hover:bg-canvas-soft/10"
+        >
+          <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+          {t.errors.useCalculator}
+        </a>
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-canvas-soft dark:border-canvas-soft/10">
+        <p class="text-xs text-mute mb-4 dark:text-canvas-soft/50">{t.errors.helpfulLinks}</p>
+        <div class="flex flex-wrap justify-center gap-4 text-xs">
+          <a href={`/${locale}/about`} class="text-primary hover:underline">{t.errors.aboutUs}</a>
+          <a href={`/${locale}/contact`} class="text-primary hover:underline">{t.errors.contactSupport}</a>
+          <a href={`/${locale}/privacy-policy`} class="text-primary hover:underline">{t.errors.privacyPolicy}</a>
+          <a href={`/${locale}/terms`} class="text-primary hover:underline">{t.errors.termsConditions}</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

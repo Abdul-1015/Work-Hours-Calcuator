@@ -1,24 +1,32 @@
 ---
-// src/layouts/Layout.astro
 import '../styles/global.css';
 import ThemeToggle from '../components/react/ThemeToggle';
+import LanguageSwitcher from '../components/astro/LanguageSwitcher.astro';
+import { getTranslations, type Locale, locales, localeNames } from '../i18n/utils';
 
 interface Props {
   title?: string;
   description?: string;
   canonicalUrl?: string;
   keywords?: string;
+  locale?: Locale;
 }
 
+const locale = (Astro.params.locale || 'en') as Locale;
+const t = getTranslations(locale);
+
 const {
-  title = "Work Hours Calculator — Free Online Time & Payroll Tool",
-  description = "Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly. Auto-detects overnight shifts.",
+  title = t.site.title,
+  description = t.site.description,
   canonicalUrl = Astro.url.href,
-  keywords = "work hours calculator, work hours calculator with lunch, weekly work hours calculator, online work hours calculator, free work hours calculator, total work hours calculator, work hours calculator with lunch break, work hours calculator with breaks, daily work hours calculator, work hours calculator app"
+  keywords = t.site.keywords,
 } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const basePath = locale === 'en' ? currentPath : currentPath.replace(`/${locale}`, '') || '/';
 ---
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,25 +56,35 @@ const {
     <meta name="author" content="WorkHours" />
     <link rel="canonical" href={canonicalUrl} />
 
+    {/* Alternate Language Links for SEO */}
+    {locales.map((loc) => {
+      const altPath = loc === 'en' ? basePath : `/${loc}${basePath}`;
+      const altUrl = `${Astro.url.origin}${altPath}`;
+      return (
+        <link rel="alternate" hreflang={loc} href={altUrl} />
+      );
+    })}
+    <link rel="alternate" hreflang="x-default" href={`${Astro.url.origin}${basePath}`} />
+
     {/* Open Graph / Facebook */}
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content="Work Hours Calculator — Free Online Time & Payroll Tool" />
-    <meta property="og:description" content="Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly. Auto-detects overnight shifts." />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:image" content={`${Astro.url.origin}/og-image.png`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Work Hours Calculator - Free Online Time Tracking Tool" />
+    <meta property="og:image:alt" content={t.hero.title1} />
     <meta property="og:site_name" content="WorkHours Calculator" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={locale === 'en' ? 'en_US' : locale} />
 
     {/* Twitter */}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalUrl} />
-    <meta name="twitter:title" content="Work Hours Calculator — Free Online Time & Payroll Tool" />
-    <meta name="twitter:description" content="Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly." />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${Astro.url.origin}/og-image.png`} />
-    <meta name="twitter:image:alt" content="Work Hours Calculator - Free Online Time Tracking Tool" />
+    <meta name="twitter:image:alt" content={t.hero.title1} />
 
     {/* Preconnect & Google Fonts */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,9 +98,10 @@ const {
         "@type": "WebApplication",
         "name": "Work Hours Calculator",
         "url": "https://calcworkhours.com",
-        "description": "Free online Work Hours Calculator with lunch break support. Calculate total work hours, decimal hours, and weekly timesheets instantly.",
+        "description": {JSON.stringify(description)},
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "All",
+        "inLanguage": "{locale}",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -108,26 +127,26 @@ const {
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "How do I convert hours and minutes to decimal hours?",
+            "name": {JSON.stringify(t.faq.q1.replace(/<[^>]*>/g, ''))},
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "To convert minutes to decimal hours, divide the minutes by 60. For example, 15 minutes is 15/60 = 0.25 hours, 30 minutes is 30/60 = 0.50 hours, and 45 minutes is 45/60 = 0.75 hours. Add this back to the total hours to get decimal hours (e.g. 8 hours and 15 minutes is 8.25 decimal hours)."
+              "text": {JSON.stringify(t.faq.a1.replace(/<[^>]*>/g, ''))}
             }
           },
           {
             "@type": "Question",
-            "name": "How does automatic overnight shift detection work?",
+            "name": {JSON.stringify(t.faq.q2.replace(/<[^>]*>/g, ''))},
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "If the end time entered is chronologically before the start time (e.g., start 10:00 PM and end 6:00 AM), the calculator automatically assumes an overnight shift and adds 24 hours to the end time. This prevents negative totals and calculates the elapsed duration correctly."
+              "text": {JSON.stringify(t.faq.a2.replace(/<[^>]*>/g, ''))}
             }
           },
           {
             "@type": "Question",
-            "name": "Why do employers require decimal hours for payroll?",
+            "name": {JSON.stringify(t.faq.q3.replace(/<[^>]*>/g, ''))},
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Decimal hours simplify payroll arithmetic. Multiplying an hourly wage by hours and minutes (like 7 hours and 45 minutes) yields an incorrect total. Converting 45 minutes to 0.75 decimal hours yields 7.75 hours, which can be directly multiplied by the pay rate (e.g., $20.00/hour * 7.75 = $155.00)."
+              "text": {JSON.stringify(t.faq.a3.replace(/<[^>]*>/g, ''))}
             }
           },
           {
@@ -165,14 +184,14 @@ const {
       href="#main-content" 
       class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:bg-primary focus:text-ink focus:px-4 focus:py-2 focus:rounded-md focus:font-bold focus:shadow-md"
     >
-      Skip to main content
+      {t.nav.skipToMain}
     </a>
     
     <div class="min-h-screen flex flex-col justify-between">
       {/* Header / Nav Area (Wise-inspired, sticky on page) */}
       <header class="w-full bg-canvas border-b border-canvas-soft sticky top-0 z-40 dark:bg-[#111311] dark:border-canvas-soft/10" role="banner">
         <div class="max-w-5xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <a href="/" class="flex items-center gap-2 focus-visible:outline-hidden" aria-label="WorkHours Homepage">
+          <a href={locale === 'en' ? '/' : `/${locale}`} class="flex items-center gap-2 focus-visible:outline-hidden" aria-label="WorkHours Homepage">
             <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-ink font-bold text-lg select-none" aria-hidden="true">
               W
             </div>
@@ -182,16 +201,17 @@ const {
           </a>
 
           <nav class="flex items-center space-x-4 md:space-x-6" role="navigation" aria-label="Main Navigation">
-            <a href="/#how-it-works" class="text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">How it works</a>
-            <a href="/#faq" class="text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">FAQ</a>
-            <a href="/about" class="hidden md:inline-flex text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">About</a>
-            <a href="/contact" class="hidden md:inline-flex text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">Contact</a>
+            <a href={`${locale === 'en' ? '' : `/${locale}`}/#how-it-works`} class="text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">{t.nav.howItWorks}</a>
+            <a href={`${locale === 'en' ? '' : `/${locale}`}/#faq`} class="text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">{t.nav.faq}</a>
+            <a href={`${locale === 'en' ? '' : `/${locale}`}/about`} class="hidden md:inline-flex text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">{t.nav.about}</a>
+            <a href={`${locale === 'en' ? '' : `/${locale}`}/contact`} class="hidden md:inline-flex text-xs font-bold text-ink hover:text-primary-neutral transition-default dark:text-canvas-soft dark:hover:text-primary">{t.nav.contact}</a>
             <ThemeToggle client:load />
+            <LanguageSwitcher currentLocale={locale} currentPath={currentPath} />
             <a 
-              href="/#calculator" 
+              href={`${locale === 'en' ? '' : `/${locale}`}/#calculator`} 
               class="hidden sm:inline-flex px-4 py-2 text-xs font-bold bg-primary text-ink hover:bg-primary-hover active:bg-primary-neutral rounded-xl transition-default"
             >
-              Use Calculator
+              {t.nav.useCalculator}
             </a>
           </nav>
         </div>

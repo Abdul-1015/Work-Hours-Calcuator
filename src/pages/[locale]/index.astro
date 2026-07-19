@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/astro/Hero.astro';
+import Calculator from '../../components/react/Calculator';
+import HowItWorks from '../../components/astro/HowItWorks.astro';
+import Faq from '../../components/astro/Faq.astro';
+import Footer from '../../components/astro/Footer.astro';
+import { getTranslations, type Locale, locales } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales.filter(l => l !== 'en').map(locale => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getTranslations(locale as Locale);
+---
+
+<Layout locale={locale as Locale}>
+  <Hero t={t.hero} />
+  
+  <section id="calculator" class="w-full bg-canvas-soft pb-16 md:pb-24 scroll-mt-20 dark:bg-[#1a1d1a]">
+    <Calculator client:load translations={t.calculator} locale={locale} />
+  </section>
+
+  <section class="w-full bg-canvas py-16 md:py-24 dark:bg-[#111311]" aria-labelledby="seo-content-title">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 id="seo-content-title" class="text-2xl md:text-3xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
+        {t.seoContent.title}
+      </h2>
+      
+      <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
+        <p set:html={t.seoContent.p1}></p>
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.seoContent.h3_1}</h3>
+        <p set:html={t.seoContent.p2}></p>
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.seoContent.h3_2}</h3>
+        <p set:html={t.seoContent.p3}></p>
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.seoContent.h3_3}</h3>
+        <p set:html={t.seoContent.p4}></p>
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.seoContent.h3_4}</h3>
+        <p set:html={t.seoContent.p5}></p>
+        <h3 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.seoContent.h3_5}</h3>
+        <p set:html={t.seoContent.p6}></p>
+        <p set:html={t.seoContent.p7}></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="scroll-mt-16">
+    <HowItWorks t={t.howItWorks} />
+  </section>
+
+  <section id="faq" class="scroll-mt-16">
+    <Faq t={t.faq} />
+  </section>
+
+  <Footer t={t.footer} locale={locale as Locale} />
+</Layout>

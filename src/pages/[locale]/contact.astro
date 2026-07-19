@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/astro/Footer.astro';
+import { getTranslations, type Locale, locales } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales.filter(l => l !== 'en').map(locale => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getTranslations(locale as Locale);
+---
+
+<Layout 
+  title={t.contact.title}
+  description={t.contact.description}
+  keywords="contact work hours calculator, support, feedback, get in touch"
+  locale={locale as Locale}
+>
+  <main class="w-full bg-canvas min-h-screen dark:bg-[#111311]">
+    <div class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
+      <h1 class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
+        {t.contact.title}
+      </h1>
+      
+      <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
+        <p class="text-lg leading-relaxed" set:html={t.contact.description}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.getInTouch}</h2>
+        <p set:html={t.contact.getInTouchText}></p>
+        
+        <div class="bg-canvas-soft rounded-xl p-6 md:p-8 border border-canvas-soft/40 dark:bg-[#1a1d1a] dark:border-canvas-soft/10 not-prose">
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center shrink-0">
+                <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <span class="text-sm font-bold text-ink block dark:text-canvas">{t.contact.email}</span>
+                <a href="mailto:sulphonic1@gmail.com" class="text-primary hover:underline">sulphonic1@gmail.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.helpTitle}</h2>
+        <p set:html={t.contact.helpIntro}></p>
+        <ul class="list-disc pl-6 space-y-2">
+          {t.contact.helpList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
+        </ul>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.responseTitle}</h2>
+        <p set:html={t.contact.response}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.faqTitle}</h2>
+        <p set:html={t.contact.faq}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.privacyTitle}</h2>
+        <p set:html={t.contact.privacy}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.thankYouTitle}</h2>
+        <p set:html={t.contact.thankYou}></p>
+      </div>
+    </div>
+  </main>
+  <Footer t={t.footer} locale={locale as Locale} />
+</Layout>

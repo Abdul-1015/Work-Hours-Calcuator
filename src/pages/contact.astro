@@ -1,28 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/astro/Footer.astro';
+import { getTranslations } from '../i18n/utils';
+
+const t = getTranslations('en');
 ---
 
 <Layout 
-  title="Contact Us — Work Hours Calculator"
-  description="Get in touch with Work Hours Calculator. Have questions, feedback, or suggestions? We'd love to hear from you."
+  title={t.contact.title}
+  description={t.contact.description}
   keywords="contact work hours calculator, support, feedback, get in touch"
+  locale="en"
 >
   <main class="w-full bg-canvas min-h-screen dark:bg-[#111311]">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
       <h1 class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
-        Contact Us
+        {t.contact.title}
       </h1>
       
       <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
-        <p class="text-lg leading-relaxed">
-          We'd love to hear from you! Whether you have a question, feedback, suggestion, or just want to say hello, please don't hesitate to reach out.
-        </p>
+        <p class="text-lg leading-relaxed" set:html={t.contact.description}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Get in Touch</h2>
-        <p>
-          The best way to reach us is via email. We typically respond within 24-48 hours during business days.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.getInTouch}</h2>
+        <p set:html={t.contact.getInTouchText}></p>
         
         <div class="bg-canvas-soft rounded-xl p-6 md:p-8 border border-canvas-soft/40 dark:bg-[#1a1d1a] dark:border-canvas-soft/10 not-prose">
           <div class="space-y-4">
@@ -33,47 +33,34 @@ import Footer from '../components/astro/Footer.astro';
                 </svg>
               </div>
               <div>
-                <span class="text-sm font-bold text-ink block dark:text-canvas">Email</span>
+                <span class="text-sm font-bold text-ink block dark:text-canvas">{t.contact.email}</span>
                 <a href="mailto:sulphonic1@gmail.com" class="text-primary hover:underline">sulphonic1@gmail.com</a>
               </div>
             </div>
           </div>
         </div>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">What Can We Help With?</h2>
-        <p>
-          Feel free to contact us about:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.helpTitle}</h2>
+        <p set:html={t.contact.helpIntro}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li><strong class="text-ink dark:text-canvas">Bug Reports</strong> — Found something broken? Let us know so we can fix it</li>
-          <li><strong class="text-ink dark:text-canvas">Feature Requests</strong> — Have an idea for a new feature? We're always looking to improve</li>
-          <li><strong class="text-ink dark:text-canvas">Feedback</strong> — Tell us what you like or what could be better</li>
-          <li><strong class="text-ink dark:text-canvas">Questions</strong> — Not sure how something works? Ask us</li>
-          <li><strong class="text-ink dark:text-canvas">Partnerships</strong> — Interested in working together? Let's talk</li>
-          <li><strong class="text-ink dark:text-canvas">General Inquiries</strong> — Anything else on your mind</li>
+          {t.contact.helpList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
         </ul>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Response Time</h2>
-        <p>
-          We aim to respond to all inquiries within 24-48 hours on business days. For urgent issues, please include "URGENT" in your subject line.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.responseTitle}</h2>
+        <p set:html={t.contact.response}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">FAQ</h2>
-        <p>
-          Before contacting us, you might find your answer in our <a href="/#faq" class="text-primary hover:underline">FAQ section</a> on the homepage. We've answered many common questions there.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.faqTitle}</h2>
+        <p set:html={t.contact.faq}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Privacy</h2>
-        <p>
-          Remember, all calculations on our site are performed locally in your browser. We never see or store any data you enter into the calculator. For more details, see our <a href="/privacy-policy" class="text-primary hover:underline">Privacy Policy</a>.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.privacyTitle}</h2>
+        <p set:html={t.contact.privacy}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Thank You</h2>
-        <p>
-          Thank you for using Work Hours Calculator! Your feedback helps us make the tool better for everyone.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.contact.thankYouTitle}</h2>
+        <p set:html={t.contact.thankYou}></p>
       </div>
     </div>
   </main>
-  <Footer />
+  <Footer t={t.footer} locale="en" />
 </Layout>

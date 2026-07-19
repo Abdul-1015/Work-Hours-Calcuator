@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/astro/Footer.astro';
+import { getTranslations, type Locale, locales } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return locales.filter(l => l !== 'en').map(locale => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params;
+const t = getTranslations(locale as Locale);
+---
+
+<Layout 
+  title={t.about.title}
+  description={t.about.description}
+  keywords="about work hours calculator, time tracking tool, payroll calculator"
+  locale={locale as Locale}
+>
+  <main class="w-full bg-canvas min-h-screen dark:bg-[#111311]">
+    <div class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
+      <h1 class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
+        {t.about.title}
+      </h1>
+      
+      <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
+        <p class="text-lg leading-relaxed" set:html={t.about.description}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.missionTitle}</h2>
+        <p set:html={t.about.mission}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.whyTitle}</h2>
+        <p set:html={t.about.why}></p>
+        <ul class="list-disc pl-6 space-y-2">
+          {t.about.whyList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
+        </ul>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.featuresTitle}</h2>
+        <p set:html={t.about.featuresIntro}></p>
+        <ul class="list-disc pl-6 space-y-2">
+          {t.about.featuresList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
+        </ul>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.usersTitle}</h2>
+        <p set:html={t.about.usersIntro}></p>
+        <ul class="list-disc pl-6 space-y-2">
+          {t.about.usersList.map((item: string) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.commitmentTitle}</h2>
+        <p set:html={t.about.commitment}></p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.contactTitle}</h2>
+        <p set:html={t.about.contactText}></p>
+      </div>
+    </div>
+  </main>
+  <Footer t={t.footer} locale={locale as Locale} />
+</Layout>

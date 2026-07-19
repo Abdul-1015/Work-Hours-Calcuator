@@ -25,11 +25,60 @@ interface TimesheetRow {
   breakMins: string; // stored as string to make typing easier
 }
 
-const DAYS_OF_WEEK = [
+interface CalculatorTranslations {
+  singleShift: string;
+  weeklyTimesheet: string;
+  twelveHour: string;
+  twentyFourHour: string;
+  shiftParameters: string;
+  startTime: string;
+  endTime: string;
+  breakDuration: string;
+  inMinutes: string;
+  hourlyWage: string;
+  optional: string;
+  noBreak: string;
+  overnightDetected: string;
+  overnightMessage: string;
+  resetShift: string;
+  totalWorkedTime: string;
+  decimalHours: string;
+  totalMinutes: string;
+  grossElapsed: string;
+  breakSubtracted: string;
+  hourlyRate: string;
+  totalPay: string;
+  copyResult: string;
+  copied: string;
+  weeklyLogs: string;
+  monSunTimesheet: string;
+  start: string;
+  end: string;
+  breakMin: string;
+  total: string;
+  overnight: string;
+  weeklySumTotal: string;
+  daysLogged: string;
+  copyWeeklySummary: string;
+  copiedSummary: string;
+  exportCSV: string;
+  exportedCSV: string;
+  resetAllEntries: string;
+  noBreakLabel: string;
+  days: string[];
+}
+
+interface CalculatorProps {
+  translations: CalculatorTranslations;
+  locale?: string;
+}
+
+const DEFAULT_DAYS_OF_WEEK = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ];
 
-export default function Calculator() {
+export default function Calculator({ translations: t, locale = 'en' }: CalculatorProps) {
+  const DAYS_OF_WEEK = t.days && t.days.length === 7 ? t.days : DEFAULT_DAYS_OF_WEEK;
   const [activeTab, setActiveTab] = useState<'single' | 'weekly'>('single');
   const [is24h, setIs24h] = useState<boolean>(false);
   
@@ -251,7 +300,7 @@ export default function Calculator() {
                 : "text-body hover:text-ink hover:bg-canvas-soft dark:text-canvas-soft/70 dark:hover:text-canvas dark:hover:bg-canvas-soft/10"
             )}
           >
-            Single Shift
+            {t.singleShift}
           </button>
           <button
             onClick={() => setActiveTab('weekly')}
@@ -264,13 +313,13 @@ export default function Calculator() {
                 : "text-body hover:text-ink hover:bg-canvas-soft dark:text-canvas-soft/70 dark:hover:text-canvas dark:hover:bg-canvas-soft/10"
             )}
           >
-            Weekly Timesheet
+            {t.weeklyTimesheet}
           </button>
         </div>
 
         {/* 12h/24h Selector */}
         <div className="flex items-center space-x-2 self-end sm:self-auto">
-          <span className={cn("text-xs font-semibold uppercase tracking-wider", !is24h ? "text-ink dark:text-canvas" : "text-mute dark:text-canvas-soft/50")}>12-Hour</span>
+          <span className={cn("text-xs font-semibold uppercase tracking-wider", !is24h ? "text-ink dark:text-canvas" : "text-mute dark:text-canvas-soft/50")}>{t.twelveHour}</span>
           <button
             type="button"
             role="switch"
@@ -289,7 +338,7 @@ export default function Calculator() {
               )}
             />
           </button>
-          <span className={cn("text-xs font-semibold uppercase tracking-wider", is24h ? "text-ink dark:text-canvas" : "text-mute dark:text-canvas-soft/50")}>24-Hour (Military)</span>
+          <span className={cn("text-xs font-semibold uppercase tracking-wider", is24h ? "text-ink dark:text-canvas" : "text-mute dark:text-canvas-soft/50")}>{t.twentyFourHour}</span>
         </div>
       </div>
 
@@ -304,14 +353,14 @@ export default function Calculator() {
               <div>
                 <h2 className="text-xl font-bold tracking-tight mb-6 flex items-center gap-2 dark:text-canvas">
                   <Clock className="w-5 h-5 text-primary-neutral" />
-                  Shift Time Parameters
+                  {t.shiftParameters}
                 </h2>
 
                 <div className="space-y-6">
                   {/* Start Time Row */}
                   <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
                     <label htmlFor="single-start" className="text-sm font-semibold text-body dark:text-canvas-soft/80">
-                      Start Time
+                      {t.startTime}
                     </label>
                     <div className="md:col-span-2 flex items-center gap-2">
                       <div className="relative flex-1 focus-ring-group flex items-center bg-canvas border border-ink/20 rounded-md overflow-hidden transition-default h-12 dark:bg-[#1a1d1a] dark:border-canvas-soft/20">
@@ -359,7 +408,7 @@ export default function Calculator() {
                   {/* End Time Row */}
                   <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
                     <label htmlFor="single-end" className="text-sm font-semibold text-body dark:text-canvas-soft/80">
-                      End Time
+                      {t.endTime}
                     </label>
                     <div className="md:col-span-2 flex items-center gap-2">
                       <div className="relative flex-1 focus-ring-group flex items-center bg-canvas border border-ink/20 rounded-md overflow-hidden transition-default h-12 dark:bg-[#1a1d1a] dark:border-canvas-soft/20">
@@ -408,9 +457,9 @@ export default function Calculator() {
                   <div className="grid grid-cols-1 md:grid-cols-3 items-start gap-4 pt-2">
                     <div>
                       <label htmlFor="single-break" className="text-sm font-semibold text-body dark:text-canvas-soft/80">
-                        Break Duration
+                        {t.breakDuration}
                       </label>
-                      <span className="block text-xs text-mute mt-0.5 dark:text-canvas-soft/50">In minutes</span>
+                      <span className="block text-xs text-mute mt-0.5 dark:text-canvas-soft/50">{t.inMinutes}</span>
                     </div>
                     <div className="md:col-span-2 space-y-3">
                       <div className="relative focus-ring-group flex items-center bg-canvas border border-ink/20 rounded-md overflow-hidden transition-default h-12 dark:bg-[#1a1d1a] dark:border-canvas-soft/20">
@@ -425,7 +474,7 @@ export default function Calculator() {
                           className="w-full h-full px-4 text-base bg-transparent text-ink placeholder-mute outline-hidden [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none dark:text-canvas dark:placeholder-canvas-soft/50"
                           aria-label="Break duration in minutes"
                         />
-                        <span className="pr-4 text-sm font-semibold text-body dark:text-canvas-soft/70">minutes</span>
+                        <span className="pr-4 text-sm font-semibold text-body dark:text-canvas-soft/70">{t.inMinutes}</span>
                       </div>
                       
                       {/* Presets */}
@@ -442,7 +491,7 @@ export default function Calculator() {
                                 : "bg-canvas text-body border-ink/10 hover:border-ink/30 hover:text-ink dark:bg-[#1a1d1a] dark:text-canvas-soft/70 dark:border-canvas-soft/20 dark:hover:border-canvas-soft/30 dark:hover:text-canvas"
                             )}
                           >
-                            {mins === 0 ? 'No Break' : `${mins}m`}
+                            {mins === 0 ? t.noBreakLabel : `${mins}m`}
                           </button>
                         ))}
                       </div>
@@ -453,9 +502,9 @@ export default function Calculator() {
                   <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4 pt-2">
                     <div>
                       <label htmlFor="single-wage" className="text-sm font-semibold text-body dark:text-canvas-soft/80">
-                        Hourly Wage
+                        {t.hourlyWage}
                       </label>
-                      <span className="block text-xs text-mute mt-0.5 dark:text-canvas-soft/50">Optional</span>
+                      <span className="block text-xs text-mute mt-0.5 dark:text-canvas-soft/50">{t.optional}</span>
                     </div>
                     <div className="md:col-span-2 flex items-center gap-2">
                       <div className="flex bg-canvas-soft border border-ink/10 rounded-md p-1 h-12 items-center dark:bg-canvas-soft/10 dark:border-canvas-soft/20">
@@ -498,8 +547,8 @@ export default function Calculator() {
                   <div className="mt-6 flex items-start gap-3 bg-primary-pale text-ink-deep p-4 rounded-xl border border-primary-neutral/40 dark:bg-primary/10 dark:text-primary dark:border-primary/20">
                     <Moon className="w-5 h-5 shrink-0 text-positive mt-0.5" />
                     <div>
-                      <span className="text-sm font-bold block">Overnight Shift Detected</span>
-                      <span className="text-body dark:text-canvas-soft/70">The end time is earlier than the start time. We automatically added 24 hours to complete the calculations.</span>
+                      <span className="text-sm font-bold block">{t.overnightDetected}</span>
+                      <span className="text-body dark:text-canvas-soft/70">{t.overnightMessage}</span>
                     </div>
                   </div>
                 )}
@@ -521,7 +570,7 @@ export default function Calculator() {
                   className="flex items-center gap-2 text-sm font-bold text-body hover:text-ink cursor-pointer transition-default dark:text-canvas-soft/70 dark:hover:text-canvas"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  Reset shift settings
+                  {t.resetShift}
                 </button>
               </div>
             </div>
@@ -534,7 +583,7 @@ export default function Calculator() {
               {/* Calculation Output Area */}
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-mute block mb-2 dark:text-canvas-soft/50">
-                  Total Worked Time
+                  {t.totalWorkedTime}
                 </span>
                 <div className="flex items-baseline gap-2 mb-8">
                   <h3 className="text-5xl font-wise font-black tracking-tight text-primary tabular-nums">
@@ -547,7 +596,7 @@ export default function Calculator() {
                 <div className="space-y-4">
                   {/* Decimal Hours */}
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-canvas-soft/70">Decimal Hours</span>
+                    <span className="text-sm text-canvas-soft/70">{t.decimalHours}</span>
                     <span className="text-lg font-bold text-canvas font-mono tabular-nums">
                       {result.isValid ? `${result.workedHours.toFixed(2)}h` : '--'}
                     </span>
@@ -555,7 +604,7 @@ export default function Calculator() {
 
                   {/* Total Minutes */}
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-canvas-soft/70">Total Minutes</span>
+                    <span className="text-sm text-canvas-soft/70">{t.totalMinutes}</span>
                     <span className="text-lg font-bold text-canvas font-mono tabular-nums">
                       {result.isValid ? `${result.workedMinutes}m` : '--'}
                     </span>
@@ -565,13 +614,13 @@ export default function Calculator() {
                   {result.isValid && (
                     <>
                       <div className="flex justify-between items-center text-xs text-canvas-soft/40 pt-2 border-t border-canvas-soft/5 dark:border-canvas-soft/10">
-                        <span>Gross Elapsed</span>
+                        <span>{t.grossElapsed}</span>
                         <span className="tabular-nums">
                           {formatMinutesToDuration(result.workedMinutes + (parseInt(singleBreak, 10) || 0))}
                         </span>
                       </div>
                       <div className="flex justify-between items-center text-xs text-canvas-soft/40">
-                        <span>Break Subtracted</span>
+                        <span>{t.breakSubtracted}</span>
                         <span className="tabular-nums">
                           -{parseInt(singleBreak, 10) || 0}m
                         </span>
@@ -583,13 +632,13 @@ export default function Calculator() {
                   {result.isValid && singleWage > 0 && (
                     <>
                       <div className="flex justify-between items-center pt-2 border-t border-canvas-soft/5 dark:border-canvas-soft/10">
-                        <span className="text-sm text-canvas-soft/70">Hourly Rate</span>
+                        <span className="text-sm text-canvas-soft/70">{t.hourlyRate}</span>
                         <span className="text-sm font-bold text-canvas font-mono tabular-nums">
                           {currencySymbol}{singleWage.toFixed(2)}/hr
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-canvas-soft/70">Total Pay</span>
+                        <span className="text-sm text-canvas-soft/70">{t.totalPay}</span>
                         <span className="text-2xl font-bold text-primary font-mono tabular-nums">
                           {currencySymbol}{singleTotalPay.toFixed(2)}
                         </span>
@@ -615,12 +664,12 @@ export default function Calculator() {
                   {copySuccess ? (
                     <>
                       <Check className="w-5 h-5" />
-                      Copied!
+                      {t.copied}
                     </>
                   ) : (
                     <>
                       <Copy className="w-5 h-5" />
-                      Copy Result
+                      {t.copyResult}
                     </>
                   )}
                 </button>
@@ -637,10 +686,10 @@ export default function Calculator() {
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-bold tracking-tight flex items-center gap-2 dark:text-canvas">
                     <CalendarCheck className="w-5 h-5 text-primary-neutral" />
-                    Weekly Logs
+                    {t.weeklyLogs}
                   </h2>
                   <span className="text-xs text-mute bg-canvas-soft px-3 py-1 rounded-md dark:text-canvas-soft/50 dark:bg-canvas-soft/10">
-                    Mon - Sun Timesheet
+                    {t.monSunTimesheet}
                   </span>
                 </div>
 
@@ -664,7 +713,7 @@ export default function Calculator() {
                           <span className="font-bold text-ink text-base dark:text-canvas">{row.day}</span>
                           {parsedRow.overnight && (
                             <span className="ml-2 text-[10px] bg-primary text-ink-deep font-bold px-1.5 py-0.5 rounded-sm uppercase tracking-wide">
-                              Overnight
+                              {t.overnight}
                             </span>
                           )}
                         </div>
@@ -673,7 +722,7 @@ export default function Calculator() {
                         <div className="flex flex-col sm:flex-row sm:items-end gap-3">
                           {/* Start Time */}
                           <div className="flex-1 space-y-1">
-                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">Start</span>
+                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">{t.start}</span>
                             <input
                               type="text"
                               value={row.start}
@@ -712,7 +761,7 @@ export default function Calculator() {
 
                           {/* End Time */}
                           <div className="flex-1 space-y-1">
-                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">End</span>
+                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">{t.end}</span>
                             <input
                               type="text"
                               value={row.end}
@@ -751,7 +800,7 @@ export default function Calculator() {
 
                           {/* Break Input */}
                           <div className="w-24 space-y-1">
-                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">Break (m)</span>
+                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">{t.breakMin}</span>
                             <input
                               type="number"
                               min="0"
@@ -766,7 +815,7 @@ export default function Calculator() {
 
                           {/* Calculated Day Total */}
                           <div className="w-24 text-right space-y-1">
-                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">Total</span>
+                            <span className="text-[10px] font-bold text-mute uppercase tracking-wider block dark:text-canvas-soft/50">{t.total}</span>
                             <div className="h-11 flex items-center justify-end">
                               <span className={cn(
                                 "text-sm font-bold tabular-nums",
@@ -791,7 +840,7 @@ export default function Calculator() {
               {/* Hourly Wage Input */}
               <div className="mt-6 pt-4 border-t border-canvas-soft dark:border-canvas-soft/10">
                 <label htmlFor="weekly-wage" className="text-sm font-semibold text-body dark:text-canvas-soft/80 block mb-2">
-                  Hourly Wage
+                  {t.hourlyWage}
                 </label>
                 <div className="flex items-center gap-2">
                   <div className="flex bg-canvas-soft border border-ink/10 rounded-md p-0.5 h-10 items-center dark:bg-canvas-soft/10 dark:border-canvas-soft/20">
@@ -836,7 +885,7 @@ export default function Calculator() {
                   className="flex items-center gap-2 text-sm font-bold text-body hover:text-ink cursor-pointer transition-default dark:text-canvas-soft/70 dark:hover:text-canvas"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  Reset all entries
+                  {t.resetAllEntries}
                 </button>
               </div>
             </div>
@@ -847,7 +896,7 @@ export default function Calculator() {
 
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-mute block mb-2 dark:text-canvas-soft/50">
-                  Weekly Sum Total
+                  {t.weeklySumTotal}
                 </span>
                 <div className="flex items-baseline gap-2 mb-8">
                   <h3 className="text-5xl font-wise font-black tracking-tight text-primary tabular-nums">
@@ -860,7 +909,7 @@ export default function Calculator() {
                 <div className="space-y-4">
                   {/* Worked Days count */}
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-canvas-soft/70">Days Logged</span>
+                    <span className="text-sm text-canvas-soft/70">{t.daysLogged}</span>
                     <span className="text-lg font-bold text-canvas font-mono tabular-nums">
                       {totalDaysWorked} / 7
                     </span>
@@ -868,7 +917,7 @@ export default function Calculator() {
 
                   {/* Decimal Hours */}
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-canvas-soft/70">Decimal Hours</span>
+                    <span className="text-sm text-canvas-soft/70">{t.decimalHours}</span>
                     <span className="text-lg font-bold text-canvas font-mono tabular-nums">
                       {totalWeeklyMinutes > 0 ? `${totalWeeklyHoursDecimal.toFixed(2)}h` : '0.00h'}
                     </span>
@@ -876,7 +925,7 @@ export default function Calculator() {
 
                   {/* Total Minutes */}
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-canvas-soft/70">Total Minutes</span>
+                    <span className="text-sm text-canvas-soft/70">{t.totalMinutes}</span>
                     <span className="text-lg font-bold text-canvas font-mono tabular-nums">
                       {totalWeeklyMinutes > 0 ? `${totalWeeklyMinutes}m` : '0m'}
                     </span>
@@ -886,13 +935,13 @@ export default function Calculator() {
                   {totalWeeklyMinutes > 0 && weeklyWage > 0 && (
                     <>
                       <div className="flex justify-between items-center pt-2 border-t border-canvas-soft/5 dark:border-canvas-soft/10">
-                        <span className="text-sm text-canvas-soft/70">Hourly Rate</span>
+                        <span className="text-sm text-canvas-soft/70">{t.hourlyRate}</span>
                         <span className="text-sm font-bold text-canvas font-mono tabular-nums">
                           {weeklyCurrencySymbol}{weeklyWage.toFixed(2)}/hr
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-canvas-soft/70">Total Pay</span>
+                        <span className="text-sm text-canvas-soft/70">{t.totalPay}</span>
                         <span className="text-2xl font-bold text-primary font-mono tabular-nums">
                           {weeklyCurrencySymbol}{weeklyTotalPay.toFixed(2)}
                         </span>
@@ -918,12 +967,12 @@ export default function Calculator() {
                   {weeklyCopySuccess ? (
                     <>
                       <Check className="w-5 h-5" />
-                      Copied Summary!
+                      {t.copiedSummary}
                     </>
                   ) : (
                     <>
                       <Copy className="w-5 h-5" />
-                      Copy Weekly Summary
+                      {t.copyWeeklySummary}
                     </>
                   )}
                 </button>
@@ -942,12 +991,12 @@ export default function Calculator() {
                   {weeklyExportSuccess ? (
                     <>
                       <Check className="w-5 h-5" />
-                      Exported CSV!
+                      {t.exportedCSV}
                     </>
                   ) : (
                     <>
                       <Download className="w-5 h-5" />
-                      Export CSV Report
+                      {t.exportCSV}
                     </>
                   )}
                 </button>

@@ -1,82 +1,64 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/astro/Footer.astro';
+import { getTranslations } from '../i18n/utils';
+
+const t = getTranslations('en');
 ---
 
 <Layout 
-  title="Terms & Conditions — Work Hours Calculator"
-  description="Terms and conditions for using Work Hours Calculator. Read our terms of service and usage guidelines."
+  title={t.terms.title}
+  description={t.site.description}
   keywords="terms and conditions, terms of service, work hours calculator terms"
+  locale="en"
 >
   <main class="w-full bg-canvas min-h-screen dark:bg-[#111311]">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
       <h1 class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
-        Terms & Conditions
+        {t.terms.title}
       </h1>
-      <p class="text-sm text-mute mb-8 dark:text-canvas-soft/60">Last updated: January 2025</p>
+      <p class="text-sm text-mute mb-8 dark:text-canvas-soft/60">{t.terms.lastUpdated}</p>
       
       <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">1. Acceptance of Terms</h2>
-        <p>
-          By accessing and using Work Hours Calculator ("the Service"), you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use the Service.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.acceptTitle}</h2>
+        <p set:html={t.terms.accept}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">2. Description of Service</h2>
-        <p>
-          Work Hours Calculator is a free online tool that allows users to calculate work hours, track shifts, manage weekly timesheets, and compute payroll values. The Service operates entirely within the user's web browser.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.descTitle}</h2>
+        <p set:html={t.terms.desc}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">3. Use of the Service</h2>
-        <p>You agree to use the Service only for lawful purposes and in accordance with these Terms. You agree not to:</p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.useTitle}</h2>
+        <p set:html={t.terms.use}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li>Use the Service in any way that violates any applicable law or regulation</li>
-          <li>Attempt to gain unauthorized access to any portion of the Service</li>
-          <li>Use automated systems or software to extract data from the Service</li>
-          <li>Interfere with or disrupt the Service or servers</li>
-          <li>Reverse engineer, decompile, or disassemble any part of the Service</li>
+          {t.terms.useList.map((item: string) => (
+            <li>{item}</li>
+          ))}
         </ul>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">4. Accuracy of Calculations</h2>
-        <p>
-          While we strive to provide accurate calculations, the Service is provided "as is" and "as available" without warranties of any kind. Users are responsible for verifying all calculated results before using them for payroll, tax, or legal purposes. We recommend double-checking important calculations with your employer or payroll department.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.accuracyTitle}</h2>
+        <p set:html={t.terms.accuracy}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">5. No Financial Advice</h2>
-        <p>
-          The Service does not constitute financial, tax, or legal advice. Calculated values are estimates based on the information you provide. Consult with qualified professionals for payroll, tax, or employment-related decisions.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.adviceTitle}</h2>
+        <p set:html={t.terms.advice}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">6. Intellectual Property</h2>
-        <p>
-          All content, design, graphics, and code related to the Service are the intellectual property of Work Hours Calculator. You may not reproduce, distribute, modify, or create derivative works without our express written permission.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.ipTitle}</h2>
+        <p set:html={t.terms.ip}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">7. Limitation of Liability</h2>
-        <p>
-          In no event shall Work Hours Calculator be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or business opportunities, arising out of or related to your use of the Service.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.liabilityTitle}</h2>
+        <p set:html={t.terms.liability}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">8. Disclaimer of Warranties</h2>
-        <p>
-          The Service is provided without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, and non-infringement.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.warrantyTitle}</h2>
+        <p set:html={t.terms.warranty}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">9. Changes to Terms</h2>
-        <p>
-          We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting. Your continued use of the Service after changes constitutes acceptance of the new Terms.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.changesTitle}</h2>
+        <p set:html={t.terms.changes}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">10. Governing Law</h2>
-        <p>
-          These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.governingTitle}</h2>
+        <p set:html={t.terms.governing}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">11. Contact</h2>
-        <p>
-          For questions about these Terms, please visit our <a href="/contact" class="text-primary hover:underline">Contact Us</a> page.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.terms.contactTitle}</h2>
+        <p set:html={t.terms.contact}></p>
       </div>
     </div>
   </main>
-  <Footer />
+  <Footer t={t.footer} locale="en" />
 </Layout>

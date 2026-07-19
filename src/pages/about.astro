@@ -1,79 +1,60 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/astro/Footer.astro';
+import { getTranslations } from '../i18n/utils';
+
+const t = getTranslations('en');
 ---
 
 <Layout 
-  title="About Us — Work Hours Calculator"
-  description="Learn about Work Hours Calculator, the free online tool for tracking work hours, calculating payroll, and managing timesheets."
+  title={t.about.title}
+  description={t.about.description}
   keywords="about work hours calculator, time tracking tool, payroll calculator"
+  locale="en"
 >
   <main class="w-full bg-canvas min-h-screen dark:bg-[#111311]">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-16 md:py-24">
       <h1 class="text-3xl md:text-4xl font-wise font-black tracking-tight mb-8 text-ink dark:text-canvas">
-        About Work Hours Calculator
+        {t.about.title}
       </h1>
       
       <div class="prose prose-lg max-w-none text-body dark:text-canvas-soft/80 space-y-6">
-        <p class="text-lg leading-relaxed">
-          Work Hours Calculator is a free, easy-to-use online tool designed to help employees, freelancers, and payroll managers accurately calculate work hours, track shifts, and generate payroll-ready data.
-        </p>
+        <p class="text-lg leading-relaxed" set:html={t.about.description}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Our Mission</h2>
-        <p>
-          Our mission is to provide a simple, accurate, and completely free work hours calculator that anyone can use without registration or downloads. We believe tracking your work hours should be effortless, transparent, and private.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.missionTitle}</h2>
+        <p set:html={t.about.mission}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Why We Built This</h2>
-        <p>
-          We noticed that many existing time tracking tools are either overly complicated, require paid subscriptions, or raise privacy concerns by storing your sensitive payroll data on remote servers. We wanted to create something different — a tool that:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.whyTitle}</h2>
+        <p set:html={t.about.why}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li><strong class="text-ink dark:text-canvas">Works instantly</strong> — No sign-up, no downloads, no waiting</li>
-          <li><strong class="text-ink dark:text-canvas">Respects your privacy</strong> — All calculations happen in your browser; no data leaves your device</li>
-          <li><strong class="text-ink dark:text-canvas">Is truly free</strong> — No hidden fees, no premium tiers, no limitations</li>
-          <li><strong class="text-ink dark:text-canvas">Handles real-world scenarios</strong> — Overnight shifts, lunch breaks, weekly timesheets</li>
+          {t.about.whyList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
         </ul>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Features</h2>
-        <p>
-          Our work hours calculator includes:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.featuresTitle}</h2>
+        <p set:html={t.about.featuresIntro}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li><strong class="text-ink dark:text-canvas">Single Shift Calculator</strong> — Quickly calculate hours for a single work shift</li>
-          <li><strong class="text-ink dark:text-canvas">Weekly Timesheet</strong> — Track and summarize an entire work week</li>
-          <li><strong class="text-ink dark:text-canvas">Lunch Break Support</strong> — Automatically subtract break time from your total</li>
-          <li><strong class="text-ink dark:text-canvas">Overnight Shift Detection</strong> — Automatically handles shifts that span midnight</li>
-          <li><strong class="text-ink dark:text-canvas">Decimal Hours Conversion</strong> — Instantly convert hours and minutes to decimal format for payroll</li>
-          <li><strong class="text-ink dark:text-canvas">Pay Calculator</strong> — Calculate total earnings based on hourly rate</li>
-          <li><strong class="text-ink dark:text-canvas">CSV Export</strong> — Export your weekly timesheet to a spreadsheet</li>
-          <li><strong class="text-ink dark:text-canvas">Dark Mode</strong> — Easy on the eyes for late-night calculations</li>
+          {t.about.featuresList.map((item: string) => (
+            <li set:html={item}></li>
+          ))}
         </ul>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Who Uses Our Calculator</h2>
-        <p>
-          Our tool is used by a wide range of people, including:
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.usersTitle}</h2>
+        <p set:html={t.about.usersIntro}></p>
         <ul class="list-disc pl-6 space-y-2">
-          <li>Hourly employees tracking their daily shifts</li>
-          <li>Freelancers calculating billable hours</li>
-          <li>Payroll departments verifying timesheets</li>
-          <li>Small business owners managing staff schedules</li>
-          <li>Students working part-time jobs</li>
-          <li>Anyone needing quick, accurate time calculations</li>
+          {t.about.usersList.map((item: string) => (
+            <li>{item}</li>
+          ))}
         </ul>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Our Commitment</h2>
-        <p>
-          We are committed to keeping this tool free, fast, and privacy-focused. We will never sell your data because we never collect it. Your work hours and payroll information stay on your device, period.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.commitmentTitle}</h2>
+        <p set:html={t.about.commitment}></p>
 
-        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">Get in Touch</h2>
-        <p>
-          Have questions, suggestions, or feedback? We'd love to hear from you. Visit our <a href="/contact" class="text-primary hover:underline">Contact Us</a> page to get in touch.
-        </p>
+        <h2 class="text-xl font-bold text-ink dark:text-canvas mt-8">{t.about.contactTitle}</h2>
+        <p set:html={t.about.contactText}></p>
       </div>
     </div>
   </main>
-  <Footer />
+  <Footer t={t.footer} locale="en" />
 </Layout>
