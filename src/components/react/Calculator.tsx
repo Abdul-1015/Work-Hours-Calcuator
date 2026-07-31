@@ -95,11 +95,11 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
   const [is24h, setIs24h] = useState<boolean>(false);
   
   // Single shift state
-  const [singleStart, setSingleStart] = useState<string>('09:00');
+  const [singleStart, setSingleStart] = useState<string>('');
   const [singleStartAmPm, setSingleStartAmPm] = useState<'am' | 'pm'>('am');
-  const [singleEnd, setSingleEnd] = useState<string>('05:30');
+  const [singleEnd, setSingleEnd] = useState<string>('');
   const [singleEndAmPm, setSingleEndAmPm] = useState<'am' | 'pm'>('pm');
-  const [singleBreak, setSingleBreak] = useState<string>('30');
+  const [singleBreak, setSingleBreak] = useState<string>('');
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
   const [singleHourlyWage, setSingleHourlyWage] = useState<string>('');
   const [currencySymbol, setCurrencySymbol] = useState<string>('$');
@@ -108,11 +108,11 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
   const [weeklyRows, setWeeklyRows] = useState<TimesheetRow[]>(() => 
     DAYS_OF_WEEK.map(day => ({
       day,
-      start: day === 'Saturday' || day === 'Sunday' ? '' : '09:00',
+      start: '',
       startAmPm: 'am',
-      end: day === 'Saturday' || day === 'Sunday' ? '' : '05:30',
+      end: '',
       endAmPm: 'pm',
-      breakMins: day === 'Saturday' || day === 'Sunday' ? '0' : '30'
+      breakMins: ''
     }))
   );
   const [weeklyCopySuccess, setWeeklyCopySuccess] = useState<boolean>(false);
@@ -157,11 +157,11 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
 
   // Reset Single Shift
   const handleResetSingle = () => {
-    setSingleStart('09:00');
+    setSingleStart('');
     setSingleStartAmPm('am');
-    setSingleEnd('05:30');
+    setSingleEnd('');
     setSingleEndAmPm('pm');
-    setSingleBreak('30');
+    setSingleBreak('');
     setSingleHourlyWage('');
   };
 
@@ -233,11 +233,11 @@ export default function Calculator({ translations: t, locale = 'en' }: Calculato
     setWeeklyRows(
       DAYS_OF_WEEK.map(day => ({
         day,
-        start: day === 'Saturday' || day === 'Sunday' ? '' : '09:00',
+        start: '',
         startAmPm: 'am',
-        end: day === 'Saturday' || day === 'Sunday' ? '' : '05:30',
+        end: '',
         endAmPm: 'pm',
-        breakMins: day === 'Saturday' || day === 'Sunday' ? '0' : '30'
+        breakMins: ''
       }))
     );
     setWeeklyHourlyWage('');
